@@ -1,0 +1,11 @@
+appId: com.example.EpicalScreeningApp
+productName: Epical Screening App
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null
