@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron';
 import serve from 'electron-serve';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -40,6 +40,13 @@ const createWindow = () => {
         e.preventDefault();
     });
 
+    // Disable reload shortcuts
+    mainWindow.webContents.on('before-input-event', (event, input) => {
+        if (input.key.toLowerCase() === 'r' && (input.control || input.meta)) {
+            event.preventDefault();
+        }
+    });
+
     return mainWindow;
 };
 
@@ -47,6 +54,11 @@ const createWindow = () => {
     await app.whenReady();
 
     const mainWindow = createWindow();
+
+    // Disable reload from global shortcuts
+    globalShortcut.register('CommandOrControl+R', () => {
+        console.log('Reload attempted, but disabled.');
+    });
 
     if (isProd) {
         await mainWindow.loadURL('app://./home');
@@ -56,7 +68,14 @@ const createWindow = () => {
     }
 })();
 
-app.on('window-all-closed', () => { });
+app.on('window-all-closed', () => {
+    // Do nothing if all windows are closed.
+});
+
+app.on('will-quit', () => {
+    // Unregister all shortcuts.
+    globalShortcut.unregisterAll();
+});
 
 ipcMain.on('message', async (event, arg) => {
     event.reply('message', `${arg} World!`);

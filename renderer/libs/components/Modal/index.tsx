@@ -26,8 +26,8 @@ const Modal = () => {
             <div className="w-[500px] h-[300px] bg-white rounded-md flex flex-col items-center justify-center">
                 <div className="px-6 font-bold text-xl text-center">Once you submit, Your test will be submitted and you will not be able to change your answers.</div>
                 <div className="flex flex-row mt-8">
-                    <button onClick={handleSubmit} className="px-8 py-2 bg-green-500 font-medium text-white rounded-md">YES</button>
-                    <button onClick={setModalClose} className="px-8 py-2 bg-red-500 font-medium text-white rounded-md ml-4">NO</button>
+                    <button onClick={handleSubmit} className="px-8 py-2 bg-green-500 font-medium text-white rounded-md">Submit</button>
+                    <button onClick={setModalClose} className="px-8 py-2 bg-red-500 font-medium text-white rounded-md ml-4">Go back</button>
                 </div>
             </div>
         </div>

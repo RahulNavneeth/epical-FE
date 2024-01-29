@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         const GET = async () => {
             const { data } = await axios.get(SERVER_URL + "/get-metadata")
             if (data.success) {
-                setMeta(data.data[0])
+                setMeta(data.data)
                 return;
             }
         }

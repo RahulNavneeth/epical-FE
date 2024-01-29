@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAnswerStore, useCandidateStore } from "../../store";
+import { useAnswerStore, useCandidateStore, useMetaStore } from "../../store";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { SERVER_URL } from "../../constants";
+import { get } from "http";
 
 const CountdownTimer = ({ initialTimeInMinutes }) => {
     const initialTimeInSeconds = initialTimeInMinutes * 60;
@@ -58,8 +59,11 @@ const CountdownTimer = ({ initialTimeInMinutes }) => {
 
 const QuestionGrid = () => {
     const data = useAnswerStore((state) => state.answer);
+    const getMeta = useMetaStore((state) => state.meta);
+    const getCandidate = useCandidateStore((state) => state.candidate);
+
     const router = useRouter();
-    const X = 1;
+    const X = getMeta.timeLimit;
 
     return (
         <div className="w-1/3 h-full flex flex-col items-center justify-between bg-gray-50 pt-3 pb-10">
@@ -78,6 +82,10 @@ const QuestionGrid = () => {
                                 className="m-2 w-[50px] h-[50px] bg-green-200 flex flex-col items-center justify-center">{i + 1}</button>
                     ))}
                 </div>
+            </div>
+            <div className="text-center">
+                <div>Candidate register number </div>
+                <div className="text-[30px] font-black">{getCandidate.regNo}</div>
             </div>
             <div>
                 <CountdownTimer initialTimeInMinutes={X} />

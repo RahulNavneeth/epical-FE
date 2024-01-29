@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router"
-import { useConfirmModal, useProblemSet, useAnswerStore } from "../../../libs/store";
+import { useConfirmModal, useProblemSet, useAnswerStore, useCandidateStore } from "../../../libs/store";
 import { useEffect, useState } from "react";
 
 const Question = () => {
@@ -9,15 +9,22 @@ const Question = () => {
     const problemStore = useProblemSet((state) => state.problemSet);
     const answerStore = useAnswerStore((state) => state.answer);
     const setAns = useAnswerStore((state) => state.setAnswer);
+    const useCandidate = useCandidateStore((state) => state.candidate);
 
     const [answer, setAnswer] = useState<Number | null>(null);
 
     useEffect(() => {
         const questionIndex = Number(router.query.id) - 1;
         if (answerStore && questionIndex < answerStore.length) {
-            setAnswer(answerStore[questionIndex]);
+            const answerIndex = answerStore[questionIndex];
+            setAnswer(answerIndex ? answerIndex[1] : null);
         }
     }, [router.query.id, answerStore]);
+
+    if (!useCandidate) {
+        router.push("/");
+        return;
+    }
 
     if (!problemStore) {
         router.push("/terms");
@@ -27,12 +34,14 @@ const Question = () => {
 
     const handleAnswerChange = (selectedAnswer: number) => {
         setAnswer(selectedAnswer);
-        setAns(Number(router.query.id) - 1, selectedAnswer);
+        const questionIndex = Number(router.query.id) - 1;
+        const problemIndex = problemStore[Number(router.query.id) - 1].SNO;
+        setAns(problemIndex, questionIndex, selectedAnswer);
     };
 
     return (
         <div className="w-full h-full flex flex-col p-10 justify-between relative">
-            <div className="absolute z-[-10] right-80 opacity-5"><Image width={750} height={750} src="../../images/bg-q.png" /></div>
+            <div className="absolute z-[-10] right-80 top-[20%] rotate-[30px] opacity-5"><Image width={550} height={550} src="../../images/bg-q.png" /></div>
             <div>
                 <div className="font-bold text-2xl">Question {router.query.id}</div>
                 <div className="text-xl">{problem.Question}</div>

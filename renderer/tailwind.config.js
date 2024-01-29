@@ -7,7 +7,7 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            primary: ['"Montserrat"', "sans-serif"],
+            primary: ["Times New Roman", "Times", "serif"],
         },
         extend: {},
     },
