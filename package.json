@@ -4,19 +4,9 @@
   "description": "My application description",
   "version": "1.0.0",
   "main": "app/background.js",
-  "author": {
-    "name": "Rahul Navneeth"
-  },
   "scripts": {
     "dev": "nextron",
-    "build": {
-      "appId": "com.example.nextron",
-      "productName": "epical screening",
-      "win": {
-        "target": "msi",
-        "icon": "./resources/icon.ico"
-        }
-    },
+    "build": "nextron build",
     "build:mac": "nextron build --mac",
     "build:mac:universal": "nextron build --mac --universal",
     "build:linux": "nextron build --linux",
