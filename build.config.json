@@ -1,0 +1,10 @@
+{
+	"appId": "com.example.nextron",
+	"productName": "epical screening",
+	"directories": {
+		"output": "dist"
+	},
+    "win": {
+        "target": "nsis"
+    }
+}
