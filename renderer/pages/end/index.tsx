@@ -12,7 +12,7 @@ const End = () => {
     return (
         <div className="w-full h-full flex flex-col items-center justify-evenly">
             <div className="font-bold text-3xl">THANKS FOR ATTENDING!!!</div>
-            <div className="-mt-36"><Image src="../images/logo.png" width={500} height={500} /></div>
+            <Image src="../images/logo.png" width={450} height={450} />
         </div>
     )
 }

@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { problemSetType, useProblemSet, useAnswerStore, useMetaStore, useCandidateStore } from "../../libs/store";
-import { SERVER_URL } from "../../libs/constants";
+import { problemSetType, useIPStore, useProblemSet, useAnswerStore, useMetaStore, useCandidateStore } from "../../libs/store";
 import axios from "axios";
 
 const TermsAndConditions = () => {
@@ -11,6 +10,7 @@ const TermsAndConditions = () => {
     const setAns = useAnswerStore((state) => state.fillAnswer);
     const getMeta = useMetaStore((state) => state.meta);
     const getCandidate = useCandidateStore((state) => state.candidate);
+    const SERVER_URL = useIPStore((state) => state.ip);
 
     const router = useRouter();
 

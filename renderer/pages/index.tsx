@@ -2,8 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import axios from "axios"
-import { SERVER_URL } from '../libs/constants';
-import { useCandidateStore, useMetaStore } from "../libs/store"
+import { useCandidateStore, useMetaStore, useIPStore } from "../libs/store"
 
 function Home() {
     const [username, setUsername] = useState<string>("");
@@ -14,6 +13,7 @@ function Home() {
     const router = useRouter();
     const setCandidate = useCandidateStore((state) => state.setCandidate);
     const getMeta = useMetaStore((state) => state.meta);
+    const SERVER_URL = useIPStore((state) => state.ip);
 
     const handleLogin = async () => {
         const { data }: { data: { success: boolean, message: string } } = await axios.post(SERVER_URL + "/login", {
@@ -53,7 +53,7 @@ function Home() {
                     </div>
                 </div>
                 <div className="w-full flex flex-col items-center justify-center">
-                    <div className="bg-green-500 py-2 px-4 text-white text-[40px] rounded-md w-[100%] text-center">
+                    <div className="bg-green-500 py-2 px-4 text-white text-[30px] rounded-md w-[100%] text-center">
                         {getMeta.clgName.toUpperCase()}
                     </div>
                 </div >

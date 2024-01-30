@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import { useConfirmModal, useCandidateStore, useAnswerStore } from "../../store";
+import { useConfirmModal, useIPStore, useCandidateStore, useAnswerStore } from "../../store";
 import axios from "axios";
-import { SERVER_URL } from "../../constants";
 
 const Modal = () => {
     const setModalClose = useConfirmModal((state) => state.onCancel);
     const getCandidate = useCandidateStore((state) => state.candidate);
     const getAnswer = useAnswerStore((state) => state.answer);
+    const SERVER_URL = useIPStore((state) => state.ip);
 
     const router = useRouter();
     const handleSubmit = async () => {

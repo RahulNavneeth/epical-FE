@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useAnswerStore, useCandidateStore, useMetaStore } from "../../store";
+import { useIPStore, useAnswerStore, useCandidateStore, useMetaStore } from "../../store";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { SERVER_URL } from "../../constants";
-import { get } from "http";
 
 const CountdownTimer = ({ initialTimeInMinutes }) => {
     const initialTimeInSeconds = initialTimeInMinutes * 60;
     const [timeLeft, setTimeLeft] = useState(initialTimeInSeconds);
     const getCandidate = useCandidateStore((state) => state.candidate);
     const getAnswer = useAnswerStore((state) => state.answer);
+    const SERVER_URL = useIPStore((state) => state.ip);
 
     const router = useRouter();
 
