@@ -18,9 +18,11 @@ const createWindow = () => {
         // kiosk: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            devTools: true,
+            devTools: false,
         },
     });
+
+    // mainWindow.webContents.openDevTools();
 
     mainWindow.setMenu(null);
 
@@ -40,16 +42,11 @@ const createWindow = () => {
         e.preventDefault();
     });
 
-    // Open Developer Tools for debugging
-    mainWindow.webContents.openDevTools();
-
-    // Log load URL for debugging
-    if (isProd) {
-        console.log('Loading URL: app://./');
-    } else {
-        const port = process.argv[2];
-        console.log(`Loading URL: http://localhost:${port}/`);
-    }
+    mainWindow.webContents.on('before-input-event', (event, input) => {
+        if (input.key.toLowerCase() === 'r' && (input.control || input.meta)) {
+            event.preventDefault();
+        }
+    });
 
     return mainWindow;
 };
@@ -59,25 +56,22 @@ const createWindow = () => {
 
     const mainWindow = createWindow();
 
-    // Load URL based on environment
+    globalShortcut.register('CommandOrControl+R', () => {
+        console.log('Reload attempted, but disabled.');
+    });
+
     if (isProd) {
-        await mainWindow.loadURL('app://./').catch(e => {
-            console.error('Failed to load URL in production:', e);
-        });
+        await mainWindow.loadURL('app://./');
     } else {
         const port = process.argv[2];
-        await mainWindow.loadURL(`http://localhost:${port}/`).catch(e => {
-            console.error('Failed to load URL in development:', e);
-        });
+        await mainWindow.loadURL(`http://localhost:${port}/`);
     }
 })();
 
 app.on('window-all-closed', () => {
-    app.quit(); // Quit the app when all windows are closed
 });
 
 app.on('will-quit', () => {
-    // Unregister all shortcuts.
     globalShortcut.unregisterAll();
 });
 

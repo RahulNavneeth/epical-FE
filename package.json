@@ -1,9 +1,12 @@
 {
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
+  "name": "TestICD",
+  "description": "Screening app for Epical Layouts",
   "version": "1.0.0",
   "main": "app/background.js",
+  "author": {
+    "name": "Rahul Navneeth"
+  },
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
@@ -12,7 +15,7 @@
     "build:linux": "nextron build --linux",
     "build:win32": "nextron build --win --ia32",
     "build:win64": "nextron build --win --x64",
-    "build:eww": "electron-packager . --platform=win32 --arch=x64",
+    "build:eww": "electron-packager . --platform=win32 --arch=x64 --overwrite",
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
